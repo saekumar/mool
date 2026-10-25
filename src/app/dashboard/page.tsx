@@ -2,6 +2,9 @@ import { onAuthenticateUser } from '@/actions/user'
 import { redirect } from 'next/navigation'
 import React from 'react'
 
+// Authentication reads request headers, so this page cannot be prerendered.
+export const dynamic = 'force-dynamic'
+
 type Props = {}
 
 const DasboardPage = async (props: Props) => {

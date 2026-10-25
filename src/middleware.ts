@@ -47,7 +47,7 @@ export default clerkMiddleware(async (auth, req: NextRequest) => {
 
   // Handle protected routes
   if (isProtectedRoutes(req)) {
-    auth().protect()
+    await auth.protect()
   }
 
   // Handle simple requests

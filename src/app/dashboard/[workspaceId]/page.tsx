@@ -17,10 +17,11 @@ import {
 import React from 'react'
 
 type Props = {
-  params: { workspaceId: string }
+  params: Promise<{ workspaceId: string }>
 }
 
-const Page = async ({ params: { workspaceId } }: Props) => {
+const Page = async ({ params }: Props) => {
+  const { workspaceId } = await params
   const query = new QueryClient()
 
   await query.prefetchQuery({

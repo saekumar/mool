@@ -2,11 +2,16 @@ import { completeSubscription } from '@/actions/user'
 import { redirect } from 'next/navigation'
 import React from 'react'
 
+// The page processes a Stripe checkout session from the query string and reads
+// the current Clerk user, so it must be rendered on demand.
+export const dynamic = 'force-dynamic'
+
 type Props = {
-  searchParams: { session_id?: string; cancel?: boolean }
+  searchParams: Promise<{ session_id?: string; cancel?: string }>
 }
 
-const page = async ({ searchParams: { cancel, session_id } }: Props) => {
+const page = async ({ searchParams }: Props) => {
+  const { cancel, session_id } = await searchParams
   if (session_id) {
     const customer = await completeSubscription(session_id)
     if (customer.status === 200) {
